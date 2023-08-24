@@ -74,11 +74,26 @@ function crearHTML(){
     limpiarHTML();
     if(tweets.length > 0) {
        tweets.forEach(tweet => {
+
+            //Agregar un boton de eliminar
+            const btnEliminar = document.createElement('a');
+            btnEliminar.classList.add('borrar-tweet');
+            btnEliminar.innerText = 'X'
+
+            //Añadir la función de eliminar
+
+            btnEliminar.onclick = () =>{
+                borrarTweet(tweet.id);
+            }
+
             //Crear el HTML
             const li = document.createElement('li');
 
             //Añadir el texto
             li.innerText = tweet.tweet;
+
+            //Asignar el botón
+            li.appendChild(btnEliminar);
 
             //Insertarlo en el html
 
@@ -91,9 +106,15 @@ function crearHTML(){
 //Agrega los tweets actuales a localstorage
 
 function sincronizarStorage(){ 
-
 localStorage.setItem('tweets', JSON.stringify(tweets))
+}
 
+//Elimina un tweet
+
+function borrarTweet(id){
+    tweets = tweets.filter(tweet => tweet.id !== id);
+
+    crearHTML();
 }
 
 
